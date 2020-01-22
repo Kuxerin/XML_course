@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ROOT xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="src/hu/kuxerin/jaxb/xsd/XSD_final.xsd">
+    <Readers>
+        <Reader ReaderID="2">
+            <E-mail>kuxerin@gmail.com</E-mail>
+            <Telephone>30-797-0652</Telephone>
+            <Occupation>Hallgato</Occupation>
+            <Date_of_enrollment>2018-03-24</Date_of_enrollment>
+            <Registered/>
+            <Name>
+                <First_name>Krisztián</First_name>
+                <Last_name>Lipták</Last_name>
+            </Name>
+            <Address>
+                <ZIP_Code>3529</ZIP_Code>
+                <Country>Hungary</Country>
+                <City>Miskolc</City>
+                <Street>Középszer</Street>
+                <Number>15</Number>
+            </Address>
+        </Reader>
+    </Readers>
+    <Borrows>
+        <Borrow ReaderID="2" AccessionNumber="12">
+            <Date_of_borrowing>2018-02-27</Date_of_borrowing>
+        </Borrow>
+    </Borrows>
+    <Books>
+        <Book ISBN="44747857" Author="3" Publisher="30">
+            <Title></Title>
+            <Date_of_publishing>1998</Date_of_publishing>
+            <Copies>
+                <Copy AccessionNumber="12">
+                    <Price>500</Price>
+                    <Borrowed/>
+                </Copy>
+            </Copies>
+        </Book>
+        <Book ISBN="11773347" Author="23" Publisher="2">
+            <Title>JAXB Tutorial</Title>
+            <Date_of_publishing>2011</Date_of_publishing>
+            <Copies/>
+        </Book>
+        <Book ISBN="11773323" Author="17" Publisher="2">
+            <Title>Cooking for Beginners</Title>
+            <Date_of_publishing>1993</Date_of_publishing>
+            <Copies>
+                <Copy AccessionNumber="12">
+                    <Price>190</Price>
+                </Copy>
+                <Copy AccessionNumber="13">
+                    <Price>303</Price>
+                </Copy>
+            </Copies>
+        </Book>
+    </Books>
+    <Bookings>
+        <Booking ISBN="44747857" ReaderID="2">
+            <Date_of_booking>2018-01-02</Date_of_booking>
+        </Booking>
+    </Bookings>
+    <Publishers>
+        <Publisher PublisherID="30">
+            <Address>
+                <ZIP_Code>3530</ZIP_Code>
+                <Country>Hungary</Country>
+                <City>Miskolc</City>
+            </Address>
+            <Name>Delta</Name>
+        </Publisher>
+    </Publishers>
+    <Authors>
+        <Author AuthorID="3">
+            <First_name>Donald</First_name>
+            <Last_name>Knuth</Last_name>
+        </Author>
+    </Authors>
+</ROOT>

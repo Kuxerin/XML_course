@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" vc:minVersion="1.0" vc:maxVersion="1.1">
+    
+    <xs:complexType name="Type_Address">
+        <xs:sequence>
+            <xs:element name="ZIP_Code" minOccurs="1" maxOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[0-9]{4}"></xs:pattern>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Country" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+            <xs:element name="City" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="Type_Booking">
+        <xs:sequence>
+            <xs:element name="Date_of_booking" type="xs:date" minOccurs="1" maxOccurs="1"></xs:element>
+        </xs:sequence>
+        <xs:attribute name="ISBN" type="xs:string" use="required"></xs:attribute>
+        <xs:attribute name="ReaderID" type="xs:string" use="required"></xs:attribute>
+    </xs:complexType>
+    
+    <xs:simpleType name="StrNo">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="1"></xs:minInclusive>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="E-mail">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[_\-a-zA-Z0-9\.\+]+@[a-zA-Z0-9](\.?[\-a-zA-Z0-9]*[a-zA-Z0-9])*"></xs:pattern>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="Telephone">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{2}-[0-9]{3}-[0-9]{4}"></xs:pattern>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DateShortened">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{4}"></xs:pattern>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="Price">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0"></xs:minInclusive>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:element name="ROOT">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Readers" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Reader" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="E-mail" type="E-mail" minOccurs="1" maxOccurs="1"/>
+                                        <xs:element name="Telephone" type="Telephone" minOccurs="0" maxOccurs="1"/>
+                                        <xs:element name="Occupation" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+                                        <xs:element name="Date_of_enrollment" type="xs:date" minOccurs="1" maxOccurs="1"></xs:element>
+                                        <xs:element name="Registered" minOccurs="0" maxOccurs="1">
+                                            <xs:complexType/>
+                                        </xs:element>
+                                        <xs:element name="Name" minOccurs="1" maxOccurs="1">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="First_name" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+                                                    <xs:element name="Last_name" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="Address">
+                                            <xs:complexType>
+                                                <xs:complexContent>
+                                                    <xs:extension base="Type_Address">
+                                                        <xs:sequence>
+                                                            <xs:element name="Street" minOccurs="0" maxOccurs="1"></xs:element>
+                                                            <xs:element name="Number" type="StrNo" minOccurs="1" maxOccurs="1">
+                                                            </xs:element>
+                                                        </xs:sequence>
+                                                    </xs:extension>
+                                                </xs:complexContent>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="ReaderID" type="xs:string" use="required"></xs:attribute>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                    <xs:key name="ReaderPK">
+                        <xs:selector xpath="Reader"></xs:selector>
+                        <xs:field xpath="@ReaderID"></xs:field>
+                    </xs:key>
+                </xs:element>
+                <xs:element name="Borrows" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Borrow" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Date_of_borrowing" type="xs:date" minOccurs="1" maxOccurs="1"></xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="ReaderID" type="xs:string" use="required"></xs:attribute>
+                                    <xs:attribute name="AccessionNumber" type="xs:string" use="required"></xs:attribute>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Books" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Book" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Title" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+                                        <xs:element name="Date_of_publishing" type="DateShortened" minOccurs="1" maxOccurs="1"/>
+                                        <xs:element name="Copies" minOccurs="1" maxOccurs="1">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="Copy" minOccurs="0" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+                                                                <xs:element name="Price" type="Price" minOccurs="1" maxOccurs="1"/>
+                                                                <xs:element name="Borrowed" minOccurs="0" maxOccurs="1">
+                                                                    <xs:complexType/>
+                                                                </xs:element>
+                                                            </xs:sequence>
+                                                            <xs:attribute name="AccessionNumber" type="xs:string" use="required"></xs:attribute>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                            <xs:key name="CopyPK">
+                                                <xs:selector xpath="Copy"></xs:selector>
+                                                <xs:field xpath="@AccessionNumber"></xs:field>
+                                            </xs:key>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="ISBN" type="xs:string" use="required"></xs:attribute>
+                                    <xs:attribute name="Author" type="xs:string" use="required"></xs:attribute>
+                                    <xs:attribute name="Publisher" type="xs:string" use="required"></xs:attribute>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                    <xs:key name="BookPK">
+                        <xs:selector xpath="Book"></xs:selector>
+                        <xs:field xpath="@ISBN"></xs:field>
+                    </xs:key>
+                </xs:element>
+                <xs:element name="Bookings" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Booking" type="Type_Booking" minOccurs="0" maxOccurs="unbounded">
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Publishers" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Publisher" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Address" type="Type_Address" minOccurs="1" maxOccurs="1"></xs:element>
+                                        <xs:element name="Name" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="PublisherID" type="xs:string" use="required"></xs:attribute>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                    <xs:key name="PublisherPK">
+                        <xs:selector xpath="Publisher"></xs:selector>
+                        <xs:field xpath="@PublisherID"></xs:field>
+                    </xs:key>
+                </xs:element>
+                <xs:element name="Authors" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Author" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="First_name" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+                                        <xs:element name="Last_name" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="AuthorID" type="xs:string" use="required"></xs:attribute>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                    <xs:key name="AuthorPK">
+                        <xs:selector xpath="Author"></xs:selector>
+                        <xs:field xpath="@AuthorID"></xs:field>
+                    </xs:key>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+        
+        <xs:keyref name="Booking_ReaderFK" refer="ReaderPK">
+            <xs:selector xpath="Bookings/Booking"></xs:selector>
+            <xs:field xpath="@ReaderID"></xs:field>
+        </xs:keyref>
+        <xs:keyref name="Booking_BookFK" refer="BookPK">
+            <xs:selector xpath="Bookings/Booking"></xs:selector>
+            <xs:field xpath="@ISBN"></xs:field>
+        </xs:keyref>
+        <xs:keyref name="Borrow_ReaderFK" refer="ReaderPK">
+            <xs:selector xpath="Borrows/Borrow"></xs:selector>
+            <xs:field xpath="@ReaderID"></xs:field>
+        </xs:keyref>
+        <xs:keyref name="Borrow_CopyFK" refer="CopyPK">
+            <xs:selector xpath="Borrows/Borrow"></xs:selector>
+            <xs:field xpath="@AccessionNumber"></xs:field>
+        </xs:keyref>
+        <xs:keyref name="Book_AuthorFK" refer="AuthorPK">
+            <xs:selector xpath="Books/Book"></xs:selector>
+            <xs:field xpath="@AuthorID"></xs:field>
+        </xs:keyref>
+        <xs:keyref name="Book_PublisherFK" refer="PublisherPK">
+            <xs:selector xpath="Books/Book"></xs:selector>
+            <xs:field xpath="@PublisherID"></xs:field>
+        </xs:keyref>
+    </xs:element>
+    
+</xs:schema>
